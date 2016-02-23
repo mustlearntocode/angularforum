@@ -47,7 +47,14 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 	var poll = function() {
 		   $timeout(function() {
 		      /* service call to update chartValue */
-			  ForumService.retrieveForums();
+			  var promise = ForumService.retrieveForums();
+			  	
+			  promise.then(function(success){
+				  ForumService.setForums(success);
+			  },function(error){
+				  console.log('Forum retrieval error in poller');
+			  })
+			  
 		      poll();
 		   }, 1000);
 		};     
