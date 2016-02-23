@@ -18,8 +18,7 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
 	.state('home',{
 		url: '/',
 		templateUrl : 'app/home/templates/home.html',
-		controller: 'HomeCtrl as homeCtrl',
-		resolve: {authenticate: authenticate}
+		controller: 'HomeCtrl as homeCtrl'
 	})
 	.state('forum', {
 		url: '/forum',
