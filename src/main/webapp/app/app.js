@@ -18,12 +18,14 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
 	.state('home',{
 		url: '/',
 		templateUrl : 'app/home/templates/home.html',
-		controller: 'HomeCtrl as homeCtrl'
+		controller: 'HomeCtrl as homeCtrl',
+		resolve: {authenticate: authenticate}
 	})
 	.state('forum', {
 		url: '/forum',
 		templateUrl : 'app/forum/templates/forumsMain.html',
-		controller: 'ForumCtrl as forumCtrl'
+		controller: 'ForumCtrl as forumCtrl',
+		resolve: {authenticate: authenticate}
 	})
 //	.state('forum.add', {
 //		url: '/forumAdd',
@@ -32,7 +34,27 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
 	.state('forum.detail',{
 		url: '/detail/:forumId',
 		templateUrl: 'app/forum/templates/forumDetail.html',
-		controller: 'ForumDetailCtrl as forumDetailCtrl'
+		controller: 'ForumDetailCtrl as forumDetailCtrl',
+		resolve: {authenticate: authenticate}
 	});
+	
+    function authenticate($q, UserService, $state, $timeout) {
+        if (UserService.isAuthenticated()) {
+          // Resolve the promise successfully
+          return $q.when()
+        } else {
+          // The next bit of code is asynchronously tricky.
+
+          $timeout(function() {
+            // This code runs after the authentication promise has been rejected.
+            // Go to the log-in page
+        	  UserService.setMessage('Please login before accessing the application...')
+            $state.go('login');
+          })
+
+          // Reject the authentication promise to prevent the state from loading
+          return $q.reject()
+        }
+      }
 	
 });

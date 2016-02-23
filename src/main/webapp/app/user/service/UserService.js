@@ -40,6 +40,10 @@ forumApp.service('UserService', function($http, $q) {
 		return userService.curUser;
 	};
 	
+	userService.isAuthenticated = function(){
+		return userService.curUser.authenticated;
+	};
+	
 	userService.authenticateUser = function(user) {
 		console.log('auth');
 		
@@ -93,5 +97,7 @@ forumApp.service('UserService', function($http, $q) {
 				});
 		return promise;
 	};
+	
+	
 	
 });
