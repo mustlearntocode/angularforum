@@ -6,7 +6,7 @@ forumApp.controller('LoginCtrl', function(UserService, $state, $rootScope){
 	
 	loginCtrl.message = UserService.getMessage();
 	
-	if($rootScope.from != "registration"){
+	if($rootScope.from != "registration" || $rootScope.from != "secure"){
 		UserService.setMessage(null,"login");
 	}
 	

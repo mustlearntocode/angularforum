@@ -37,7 +37,7 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
 		resolve: {authenticate: authenticate}
 	});
 	
-    function authenticate($q, UserService, $state, $timeout) {
+    function authenticate($q, UserService, $state, $timeout, $rootScope) {
         if (UserService.isAuthenticated()) {
           // Resolve the promise successfully
           return $q.when()
@@ -47,7 +47,8 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
           $timeout(function() {
             // This code runs after the authentication promise has been rejected.
             // Go to the log-in page
-        	  UserService.setMessage('Please login before accessing the application...',$state.current.name);
+        	$rootScope.from = "secure";
+        	UserService.setMessage('Please login before accessing the application...',$state.current.name);
             $state.go('login');
           })
 
