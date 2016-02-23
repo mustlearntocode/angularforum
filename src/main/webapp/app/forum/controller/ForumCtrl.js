@@ -1,4 +1,4 @@
-forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $stateParams){
+forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $stateParams, $timeout){
 	
 	var forumCtrl = this;
 	
