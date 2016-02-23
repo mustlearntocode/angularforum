@@ -44,4 +44,12 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 	};
 	
 	console.log("ForumCtrl init");
+	var poll = function() {
+		   $timeout(function() {
+		      /* service call to update chartValue */
+			  ForumService.retrieveForums();
+		      poll();
+		   }, 1000);
+		};     
+	poll();
 });
