@@ -47,9 +47,7 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
           $timeout(function() {
             // This code runs after the authentication promise has been rejected.
             // Go to the log-in page
-        	  console.log('Current State');
-        	  console.log($state);
-        	  UserService.setMessage('Please login before accessing the application...');
+        	  UserService.setMessage('Please login before accessing the application...',$state.current.name);
             $state.go('login');
           })
 

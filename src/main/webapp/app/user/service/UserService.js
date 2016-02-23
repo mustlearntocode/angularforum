@@ -21,7 +21,7 @@ forumApp.service('UserService', function($http, $q) {
 	}
 	
 	userService.setMessage = function(text,component){
-		console.log("component " + component);
+//		console.log("component " + component);
 		userService.message[component] = {text:text};
 	}
 	
@@ -45,9 +45,9 @@ forumApp.service('UserService', function($http, $q) {
 	};
 	
 	userService.authenticateUser = function(user) {
-		console.log('auth');
+	//	console.log('auth');
 		
-		console.log(user);
+	//	console.log(user);
 		
 		var headers = user ? {
 			authorization : "Basic "
@@ -58,8 +58,8 @@ forumApp.service('UserService', function($http, $q) {
 		var promise = $http.get('user/login',{headers:headers})
 			.then(
 					function(success){
-						console.log('success');
-						console.log(success.data);
+						//console.log('success');
+						//console.log(success.data);
 						return success.data;
 					},function(error){
 						console.log('error');
@@ -69,12 +69,12 @@ forumApp.service('UserService', function($http, $q) {
 	};
 
 	userService.registerUser = function(user) {
-		console.log('register');
-		console.log(user);
+		//console.log('register');
+		//console.log(user);
 		var promise = $http.post(
 				'user/register', user).then(
 				function(response) {
-					console.log('Regi Success');
+					//console.log('Regi Success');
 					return response;
 				}, function(response) {
 					console.log('Regi Failure');
@@ -88,8 +88,8 @@ forumApp.service('UserService', function($http, $q) {
 		var promise = $http.get('user/details',{params:{username:username}})
 		.then(
 				function(success){
-					console.log('success');
-					console.log(success.data);
+//					console.log('success');
+//					console.log(success.data);
 					return success.data;
 				},function(error){
 					console.log('error');

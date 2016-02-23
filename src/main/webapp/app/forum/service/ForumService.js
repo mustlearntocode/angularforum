@@ -100,7 +100,7 @@ forumApp.service('ForumService', function($http, $q) {
 	forumService.retrieveForums = function(){
 		var promise = $http.get('forum/view').then(
 				function(success){
-					console.log('forum retrieval success');
+					//console.log('forum retrieval success');
 					return success.data;
 				},
 				function(error){
@@ -111,7 +111,7 @@ forumApp.service('ForumService', function($http, $q) {
 	};
 	
 	forumService.addForum = function(data) {
-		console.log(data);
+		//console.log(data);
 		var promise = $http.post('forum/add', data).then(
 				function(success){
 					return success.data;
@@ -124,7 +124,7 @@ forumApp.service('ForumService', function($http, $q) {
 		//forumService.forums.push(data);
 	};
 	forumService.addPostToForum = function(data){
-		console.log("Adding post of: " + data);
+		//console.log("Adding post of: " + data);
 		var promise = $http.post('post/add', data).then(
 				function(success){
 					return success.data;

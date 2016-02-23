@@ -7,7 +7,7 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 	forumCtrl.forum = ForumService.getForum();
 	forumCtrl.curUser = UserService.getUser();
 	
-	console.log(forumCtrl.curUser);
+	//console.log(forumCtrl.curUser);
 	
 	forumCtrl.message = "";
 	
@@ -31,7 +31,7 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 		
 		addPromise.then(
 				function(success){
-					console.log(success);
+					//console.log(success);
 					forumCtrl.message = "Successfully added new forum!";
 					ForumService.getForums().list.push(success);
 				},function(error){
@@ -39,6 +39,8 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 					forumCtrl.message = "There was an issue adding the forum.";
 				}
 		);
+		
+		forumCtrl.forum = {};
 	};
 	
 	console.log("ForumCtrl init");
