@@ -48,9 +48,9 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 	/*
 	 * Commented out poller until refreshing model issue is fixed.
 	 */
-/*	var poll = function() {
+	var poll = function() {
 		   $timeout(function() {
-		       service call to update chartValue 
+		       //service call to update forums 
 			  var promise = ForumService.retrieveForums();
 			  	
 			  promise.then(function(success){
@@ -62,5 +62,5 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 		      poll();
 		   }, 1000);
 		};     
-	poll();*/
+	poll();
 });
