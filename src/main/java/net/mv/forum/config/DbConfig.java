@@ -40,6 +40,7 @@ public class DbConfig {
         String port = System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT");
         String databaseName = System.getenv("OPENSHIFT_APP_NAME");
         String url = "jdbc:postgresql://" + host + ":" + port + "/"+databaseName;
+       // System.err.println("URL: " + url);;
 		SimpleDriverDataSource ds = new SimpleDriverDataSource(new org.postgresql.Driver(),
 				url, username, password);
 		return ds;
@@ -55,7 +56,7 @@ public class DbConfig {
 			= new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
 		hibernateJpaVendorAdapter.setGenerateDdl(true);
-		hibernateJpaVendorAdapter.setShowSql(true);
+		hibernateJpaVendorAdapter.setShowSql(false);
 		
 		entityManagerFactory.setJpaVendorAdapter(hibernateJpaVendorAdapter);
 
