@@ -7,7 +7,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.mv.forum.forum.domain.Forum;
@@ -45,7 +47,7 @@ public class ForumServiceImpl implements ForumService{
 
 	@Override
 	public List<ForumDto> findAllForums() {
-		List<Forum> forums = forumRepository.findAll();
+		List<Forum> forums = forumRepository.findAllByOrderByDateCreatedDesc();
 		
 		List<ForumDto> forumDtos = new ArrayList<ForumDto>();
 		
@@ -69,6 +71,27 @@ public class ForumServiceImpl implements ForumService{
 		System.out.println(forumDto.getPosts());
 		
 		return forumDto;
+	}
+
+	@Override
+	public Page<ForumDto> findAllForums(Pageable page) {
+		
+		Page<Forum> forums = forumRepository.findAllByOrderByDateCreatedDesc(page);
+		
+		List<ForumDto> forumDtoList = new ArrayList<>();
+		
+		for(Forum forum : forums){
+			forumDtoList.add(new ForumDto(forum));
+		}
+		
+		Page<ForumDto> forumDtos = new PageImpl<ForumDto>(forumDtoList);
+		
+		return forumDtos;
+	}
+
+	@Override
+	public Long findForumCount() {
+		return forumRepository.count();
 	}
 	
 	

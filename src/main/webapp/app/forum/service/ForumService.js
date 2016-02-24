@@ -110,6 +110,34 @@ forumApp.service('ForumService', function($http, $q) {
 		return promise;
 	};
 	
+	forumService.retrievePaginatedForums = function(page,size){
+		var promise = $http.get('forum/viewPaginated',{params:{page:page,size:size}}).then(
+				function(success){
+					//console.log('forum retrieval success');
+					console.log(success.data.content);
+					return success.data.content;
+				},
+				function(error){
+					console.log('forum retrieval error');
+					return $q.reject(error);
+		});
+		return promise;
+	};
+	
+	forumService.retrieveForumCount = function(){
+		var promise = $http.get('forum/count')
+				.then(
+						function(success){
+							console.log("Count: " + success.data.count);
+							return success.data;
+						},function(error){
+							console.log("Error retrieving count.");
+							return $q.reject(error);
+						}
+				);
+		return promise;
+	}
+	
 	forumService.addForum = function(data) {
 		//console.log(data);
 		var promise = $http.post('forum/add', data).then(

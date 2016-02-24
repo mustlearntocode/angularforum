@@ -11,16 +11,74 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 	
 	forumCtrl.message = "";
 	
-	var promise = ForumService.retrieveForums();
+	forumCtrl.count = 0;
 	
-	promise.then(
+	forumCtrl.pages = [];
+	
+	forumCtrl.currentPage = 0;
+	
+	forumCtrl.pageSize = 5;
+	
+
+	
+	/*
+	 * Promise to get the count of total Forum objects
+	 */
+	var countPromise = ForumService.retrieveForumCount();
+	
+	countPromise.then(
 			function(success){
-				ForumService.setForums(success);
-			},
-			function(error){
-				console.log('Forum retrieval error');
-			}
-	);
+				forumCtrl.count = success.count;
+				forumCtrl.pageCount();
+				console.log('Page count: ' + forumCtrl.pages);
+			},function(error){
+				console.log('count retrieval error');
+	});
+	
+	/*
+	 * Count function to create an array to loop over for pagination buttons.
+	 */
+	forumCtrl.pageCount = function(){
+		var numberOfPages = 0;
+		if(forumCtrl.count % forumCtrl.pageSize === 0){
+			numberOfPages=forumCtrl.count/forumCtrl.pageSize;
+		}else{
+			numberOfPages=Math.floor(forumCtrl.count/forumCtrl.pageSize)+1;
+		}
+		for(var i = 0; i <numberOfPages;i++){
+			forumCtrl.pages.push(i);
+		}
+		
+	}
+	
+	forumCtrl.retrieveForums = function(){
+		var promise = ForumService.retrievePaginatedForums(forumCtrl.currentPage,forumCtrl.pageSize);
+		
+		promise.then(
+				function(success){
+					ForumService.setForums(success);
+				},
+				function(error){
+					console.log('Forum retrieval error');
+				}
+		);
+	};
+	
+	forumCtrl.retrieveForums();
+	
+	forumCtrl.retrieveForumsByPage = function(page){
+		forumCtrl.currentPage = page;
+		var promise = ForumService.retrievePaginatedForums(page,forumCtrl.pageSize);
+		
+		promise.then(
+				function(success){
+					ForumService.setForums(success);
+				},
+				function(error){
+					console.log('Forum retrieval error');
+				}
+		);
+	};
 	
 	forumCtrl.doAdd = function(){
 		
@@ -33,14 +91,25 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 				function(success){
 					//console.log(success);
 					forumCtrl.message = "Successfully added new forum!";
-					ForumService.getForums().list.push(success);
+					ForumService.getForums().list.unshift(success);
 				},function(error){
 					console.log(error);
 					forumCtrl.message = "There was an issue adding the forum.";
 				}
 		);
 		
-		forumCtrl.forum = {};
+		forumCtrl.forum ={
+				id : 0,
+				author : '',
+				title : '',
+				created : '',
+				posts : [ {
+					id : 0,
+					author : '',
+					text : '',
+					created : ''
+				} ]
+			};;
 	};
 	
 	console.log("ForumCtrl init");
@@ -51,7 +120,7 @@ forumApp.controller('ForumCtrl', function(UserService, ForumService, $state, $st
 	var poll = function() {
 		   $timeout(function() {
 		       //service call to update forums 
-			  var promise = ForumService.retrieveForums();
+			  var promise = ForumService.retrievePaginatedForums(forumCtrl.currentPage,forumCtrl.pageSize);
 			  	
 			  promise.then(function(success){
 				  ForumService.setForums(success);

@@ -30,7 +30,13 @@
 			</table>
 
 			<hr>
-
+			<div>
+			  <ul class="pagination">
+			    <li><a href="#">Prev</a></li>
+			    <li ng-repeat="pageNumber in forumCtrl.pages"><a ng-click="forumCtrl.retrieveForumsByPage(pageNumber)">{{pageNumber+1}}</a></li>
+			    <li><a href="#">Next</a></li>
+			  </ul>
+			</div>
 		</div>
 	</div>
 	<div class="col-lg-6">
