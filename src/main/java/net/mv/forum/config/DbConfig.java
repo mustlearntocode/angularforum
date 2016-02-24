@@ -22,28 +22,28 @@ public class DbConfig {
 	
 	@Bean(name="dataSource")
 	public DataSource dataSource(){
-		DataSource dataSource = null;
-		
-		String host = "localhost";
-		String port = "5432";
-		String username= "postgres";
-		String password = "admin";
-		
-		String url = "jdbc:postgresql://"+host+":"+port+"/postgres";
-		
-		dataSource = new SimpleDriverDataSource(new org.postgresql.Driver(), url, username, password);
-		
-		return dataSource;
-//        String username = System.getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME");
-//        String password = System.getenv("OPENSHIFT_POSTGRESQL_DB_PASSWORD");
-//        String host = System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST");
-//        String port = System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT");
-//        String databaseName = System.getenv("OPENSHIFT_APP_NAME");
-//        String url = "jdbc:postgresql://" + host + ":" + port + "/"+databaseName;
-//       // System.err.println("URL: " + url);;
-//		SimpleDriverDataSource ds = new SimpleDriverDataSource(new org.postgresql.Driver(),
-//				url, username, password);
-//		return ds;
+//		DataSource dataSource = null;
+//		
+//		String host = "localhost";
+//		String port = "5432";
+//		String username= "postgres";
+//		String password = "admin";
+//		
+//		String url = "jdbc:postgresql://"+host+":"+port+"/postgres";
+//		
+//		dataSource = new SimpleDriverDataSource(new org.postgresql.Driver(), url, username, password);
+//		
+//		return dataSource;
+        String username = System.getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME");
+        String password = System.getenv("OPENSHIFT_POSTGRESQL_DB_PASSWORD");
+        String host = System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST");
+        String port = System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT");
+        String databaseName = System.getenv("OPENSHIFT_APP_NAME");
+        String url = "jdbc:postgresql://" + host + ":" + port + "/"+databaseName;
+       // System.err.println("URL: " + url);;
+		SimpleDriverDataSource ds = new SimpleDriverDataSource(new org.postgresql.Driver(),
+				url, username, password);
+		return ds;
 	}
 	
 	@Bean(name="entityManagerFactory")
