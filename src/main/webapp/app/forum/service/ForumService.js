@@ -19,71 +19,6 @@ forumApp.service('ForumService', function($http, $q) {
 			list:[]
 	};
 
-//	forumService.forums = [ {
-//		id : 1,
-//		author : 'Tom',
-//		title : 'Forum 1',
-//		created : '01/01/1971',
-//		posts : [ {
-//			id : 1,
-//			author : 'Mike',
-//			text : 'Post 1',
-//			created : '01/01/1971'
-//		}, {
-//			id : 4,
-//			author : 'Sam',
-//			text : 'Post 2',
-//			created : '01/01/1971'
-//		}, {
-//			id : 5,
-//			author : 'Mike',
-//			text : 'Post 3',
-//			created : '01/01/1971'
-//		} ]
-//	}, {
-//		id : 2,
-//		author : 'Mike',
-//		title : 'Forum 2',
-//		created : '01/01/1971',
-//		posts : [ {
-//			id : 2,
-//			author : 'Mike',
-//			text : 'Post 1',
-//			created : '01/01/1971'
-//		}, {
-//			id : 6,
-//			author : 'Tom',
-//			text : 'Post 2',
-//			created : '01/01/1971'
-//		}, {
-//			id : 7,
-//			author : 'Tom',
-//			text : 'Post 3',
-//			created : '01/01/1971'
-//		} ]
-//	}, {
-//		id : 3,
-//		author : 'Sam',
-//		title : 'Forum 3',
-//		created : '01/01/1971',
-//		posts : [ {
-//			id : 3,
-//			author : 'Mike',
-//			text : 'Post 1',
-//			created : '01/01/1971'
-//		}, {
-//			id : 8,
-//			author : 'Mike',
-//			text : 'Post 2',
-//			created : '01/01/1971'
-//		}, {
-//			id : 9,
-//			author : 'Mike',
-//			text : 'Post 3',
-//			created : '01/01/1971'
-//		} ]
-//	} ];
-
 	forumService.getForum = function() {
 		return forumService.forum;
 	};
@@ -114,7 +49,7 @@ forumApp.service('ForumService', function($http, $q) {
 		var promise = $http.get('forum/viewPaginated',{params:{page:page,size:size}}).then(
 				function(success){
 					//console.log('forum retrieval success');
-					console.log(success.data.content);
+					//console.log(success.data.content);
 					return success.data.content;
 				},
 				function(error){
@@ -128,7 +63,6 @@ forumApp.service('ForumService', function($http, $q) {
 		var promise = $http.get('forum/count')
 				.then(
 						function(success){
-							console.log("Count: " + success.data.count);
 							return success.data;
 						},function(error){
 							console.log("Error retrieving count.");
