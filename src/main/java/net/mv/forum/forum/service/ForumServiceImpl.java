@@ -9,7 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import net.mv.forum.forum.domain.Forum;
@@ -92,6 +94,22 @@ public class ForumServiceImpl implements ForumService{
 	@Override
 	public Long findForumCount() {
 		return forumRepository.count();
+	}
+
+	@Override
+	public List<ForumDto> findTopFiveForums() {
+		
+		Pageable topFive = new PageRequest(0, 5, Direction.DESC, "dateCreated"); 
+		
+		List<Forum> forums = forumRepository.findTop5Forums(topFive);
+		
+		List<ForumDto> forumDtoList = new ArrayList<>();
+		
+		for(Forum forum : forums){
+			forumDtoList.add(new ForumDto(forum));
+		}
+		
+		return forumDtoList;
 	}
 	
 	

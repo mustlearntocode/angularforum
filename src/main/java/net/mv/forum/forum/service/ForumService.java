@@ -14,5 +14,6 @@ public interface ForumService {
 	public Page<ForumDto> findAllForums(Pageable page);
 	public ForumDto findForumById(Long id);
 	public Long findForumCount();
+	public List<ForumDto> findTopFiveForums();
 
 }

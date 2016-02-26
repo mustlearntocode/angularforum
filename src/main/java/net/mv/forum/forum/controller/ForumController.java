@@ -68,5 +68,10 @@ public class ForumController {
 	public ResponseEntity<CountDto> countForums(){
 		return new ResponseEntity<CountDto>(new CountDto(forumServiceImpl.findForumCount()),HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/top",produces={MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<ForumDto>> viewFiveMostRecentForums(){
+		return new ResponseEntity<List<ForumDto>>(forumServiceImpl.findTopFiveForums(), HttpStatus.OK);
+	}
 
 }

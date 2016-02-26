@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.httpBasic().and().authorizeRequests().antMatchers("/index.jsp", "/app/**", "/user/register", "/").permitAll()
+		http.httpBasic().and().authorizeRequests().antMatchers("/index.jsp", "/app/**", "/user/register", "/", "/forum/top", "/post/top").permitAll()
 				.anyRequest().authenticated().and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
 				.csrfTokenRepository(csrfTokenRepository()).and().logout().logoutSuccessUrl("/index.jsp");
 

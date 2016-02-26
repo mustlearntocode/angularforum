@@ -18,6 +18,10 @@ forumApp.service('ForumService', function($http, $q) {
 	forumService.forums = {
 			list:[]
 	};
+	
+	forumService.recentForums = {
+			list:[]
+	};
 
 	forumService.getForum = function() {
 		return forumService.forum;
@@ -30,6 +34,25 @@ forumApp.service('ForumService', function($http, $q) {
 	};
 	forumService.setForums = function(data) {
 		forumService.forums.list = data;
+	};
+	
+	forumService.getRecentForums = function(){
+		return forumService.recentForums;
+	};
+	
+	forumService.setRecentForums = function(recentForums){
+		forumService.recentForums.list = recentForums;
+	};
+	
+	forumService.findTop5Forums = function(){
+		var promise = $http.get('forum/top').then(
+				function(success){
+					return success.data;
+				},function(error){
+					return $q.reject(error);
+				}
+		);
+		return promise;
 	};
 	
 	forumService.retrieveForums = function(){

@@ -1,10 +1,15 @@
 package net.mv.forum.post.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import net.mv.forum.forum.domain.Forum;
@@ -51,6 +56,22 @@ public class PostServiceImpl implements PostService{
 		postDto.setCreated(post.getDateAuthored());
 		
 		return postDto;
+	}
+
+	@Override
+	public List<PostDto> findTop5Posts() {
+
+		Pageable topFive = new PageRequest(0, 5, Direction.DESC, "dateAuthored"); 
+		
+		List<Post> posts = postRepository.findTop5Posts(topFive);
+		
+		List<PostDto> postDtos = new ArrayList<PostDto>();
+		
+		for(Post post : posts){
+			postDtos.add(new PostDto(post));
+		}
+		
+		return postDtos;
 	}
 
 }
