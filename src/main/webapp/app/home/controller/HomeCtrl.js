@@ -7,6 +7,8 @@ forumApp.controller('HomeCtrl', function(UserService, ForumService,
 
 	homeCtrl.recentPosts = PostService.getRecentPosts();
 
+	homeCtrl.recentUsers = UserService.getRecentUsers();
+
 	var recentForumPromise = ForumService.findTop5Forums();
 
 	recentForumPromise.then(function(success) {
@@ -21,6 +23,14 @@ forumApp.controller('HomeCtrl', function(UserService, ForumService,
 		PostService.setRecentPosts(success);
 	}, function(error) {
 		console.log('Error retrieving recent posts');
+	});
+
+	var recentUserPromise = UserService.findTop5Users();
+
+	recentUserPromise.then(function(success) {
+		UserService.setRecentUsers(success);
+	}, function(error) {
+		console.log('Error retrieving recent users');
 	});
 
 });

@@ -1,6 +1,7 @@
 package net.mv.forum.user.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -41,6 +42,11 @@ public class UserController {
 	public ResponseEntity<UserDto> getUserDetails(String username) {
 		System.out.println(username);
 		return new ResponseEntity<UserDto>(userServiceImpl.retrieveUserDetails(username), HttpStatus.OK);
+	}
+	
+	@RequestMapping("/top")
+	public ResponseEntity<List<UserDto>> view5MostRecentUsers(){
+		return new ResponseEntity<List<UserDto>>(userServiceImpl.retrieve5MostRecentUsers(), HttpStatus.OK);
 	}
 
 	@ExceptionHandler(value = DataAccessException.class)
