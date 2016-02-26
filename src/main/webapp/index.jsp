@@ -49,6 +49,8 @@
 		src="${ pageContext.request.contextPath }/app/user/service/UserService.js"></script>
 	<script
 		src="${ pageContext.request.contextPath }/app/forum/service/ForumService.js"></script>
+	<script
+		src="${ pageContext.request.contextPath }/app/post/service/PostService.js"></script>
 	<script type="text/javascript"
 		src="${ pageContext.request.contextPath }/app/user/controller/LoginCtrl.js"></script>
 	<script type="text/javascript"
