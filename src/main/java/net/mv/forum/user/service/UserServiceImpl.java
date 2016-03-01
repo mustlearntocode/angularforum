@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService{
 		mailServiceImpl.sendMail(
 				userToRegister.getEmail(), 
 				"Welcome to the forum! Please follow this link to activate your account:"
-				+ "http://localhost:8081/angularforum/user/activate?id="+userToRegister.getUserId()
+				+ "http://angularforum-greanspace.rhcloud.com/user/activate?id="+userToRegister.getUserId()
 				, "Angular Forum Registration");
 	}
 
