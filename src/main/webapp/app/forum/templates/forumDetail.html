@@ -33,13 +33,14 @@
 					<label for="postForm" class="col-lg-2 control-label">Text</label>
 					<div class="col-lg-10">
 						<textarea class="form-control" name="postForm.text" rows="3"
-							id="postForm.text" ng-model="forumDetailCtrl.post.text"></textarea>
+							id="postForm.text" ng-model="forumDetailCtrl.post.text" ng-required="true"></textarea>
+						<p class="help-block" ng-show="postForm.text.$invalid && !postForm.text.$pristine">Please add a first post to your forum...</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-10 col-lg-offset-2">
 						<button type="reset" class="btn btn-default">Cancel</button>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary" ng-disabled="postForm.$invalid">Submit</button>
 					</div>
 				</div>
 			</fieldset>

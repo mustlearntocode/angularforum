@@ -9,5 +9,6 @@ public interface UserService {
 	public UserDto retrieveUserDetails(String username);
 	public void registerUser(UserDto userDto);
 	public List<UserDto> retrieve5MostRecentUsers();
+	void activateUser(Long id);
 
 }

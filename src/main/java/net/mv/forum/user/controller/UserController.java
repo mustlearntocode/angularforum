@@ -1,7 +1,11 @@
 package net.mv.forum.user.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -29,6 +33,12 @@ public class UserController {
 	public Principal getUser(Principal user) {
 		return user;
 	}
+	
+	@RequestMapping("/activate")
+	public void activateUser(Long id, HttpServletResponse response, HttpServletRequest request) throws IOException{
+		userServiceImpl.activateUser(id);
+		response.sendRedirect(request.getContextPath()+"/index.jsp");
+	}
 
 	@RequestMapping(value = "/register", method = { RequestMethod.POST }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
@@ -51,7 +61,19 @@ public class UserController {
 
 	@ExceptionHandler(value = DataAccessException.class)
 	public ResponseEntity<ExceptionDto> handleDataAccessException(DataAccessException dae) {
-		return new ResponseEntity<ExceptionDto>(new ExceptionDto("The user already exists.", dae), HttpStatus.CONFLICT);
+		System.out.println("This is my messahge: ");
+		System.out.println(dae.getMessage());
+		System.out.println(dae.getMostSpecificCause());
+		ExceptionDto dto = null;
+		if(dae.getMostSpecificCause().toString().contains("email_key")){
+			dto = new ExceptionDto("That email is already taken.", dae);
+		}else if(dae.getMostSpecificCause().toString().contains("username_key")){
+			dto = new ExceptionDto("That username is already taken.", dae);
+		}else{
+			dto = new ExceptionDto("Woahh, dude. Something unexpected has occured.", dae);
+		}
+		
+		return new ResponseEntity<ExceptionDto>(dto, HttpStatus.CONFLICT);
 	}
 
 }

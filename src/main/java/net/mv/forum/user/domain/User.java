@@ -25,9 +25,11 @@ public class User {
 	@Column(name = "u_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
+	@Column(name="username",unique=true)
 	private String username;
 	private String password;
 	private Boolean enabled;
+	@Column(name="email",unique=true)
 	private String email;
 
 	@ManyToMany(cascade=CascadeType.PERSIST)
@@ -43,7 +45,7 @@ public class User {
 		super();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
-		this.enabled = true;
+		this.enabled = false;
 		this.email = user.getEmail();
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.mv.forum.mail.service.MailService;
 import net.mv.forum.roles.domain.Role;
 import net.mv.forum.roles.repository.RoleRepository;
 import net.mv.forum.user.domain.User;
@@ -25,6 +26,14 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private MailService mailServiceImpl;
+	
+	@Override
+	public void activateUser(Long id){
+		userRepository.getOne(id).setEnabled(true);
+	}
 
 	@Override
 	public UserDto retrieveUserDetails(String username) {
@@ -37,8 +46,14 @@ public class UserServiceImpl implements UserService{
 		User userToRegister = new User(userDto);
 		Role role = roleRepository.getRoleByRoleName("USER");
 		System.out.println(role);
+		System.out.println("Sending mail...");
 		userToRegister.getRoles().add(role);
 		userRepository.save(userToRegister);
+		mailServiceImpl.sendMail(
+				userToRegister.getEmail(), 
+				"Welcome to the forum! Please follow this link to activate your account:"
+				+ "http://localhost:8081/angularforum/user/activate?id="+userToRegister.getUserId()
+				, "Angular Forum Registration");
 	}
 
 	@Override

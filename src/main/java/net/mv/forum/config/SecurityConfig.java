@@ -39,9 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.httpBasic().and().authorizeRequests().antMatchers("/index.jsp", "/app/**", "/user/register", "/", "/forum/top", "/post/top", "/user/top").permitAll()
+		http.httpBasic().and().authorizeRequests().antMatchers("/index.jsp", "/app/**", "/user/register", "/", "/forum/top", "/post/top", "/user/top", "/user/activate").permitAll()
 				.anyRequest().authenticated().and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
-				.csrfTokenRepository(csrfTokenRepository()).and().logout().logoutSuccessUrl("/index.jsp");
+				.csrfTokenRepository(csrfTokenRepository()).and().logout().logoutSuccessUrl("/index.jsp").invalidateHttpSession(true).deleteCookies("JSESSIONID","XSRF-TOKEN");
 
 	}
 

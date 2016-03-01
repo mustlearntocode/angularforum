@@ -26,10 +26,6 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
 		controller: 'ForumCtrl as forumCtrl',
 		resolve: {authenticate: authenticate}
 	})
-//	.state('forum.add', {
-//		url: '/forumAdd',
-//		templateUrl : 'app/forum/templates/forumAdd.html'
-//	})
 	.state('forum.detail',{
 		url: '/detail/:forumId',
 		templateUrl: 'app/forum/templates/forumDetail.html',
@@ -48,7 +44,7 @@ forumApp.config(function($stateProvider, $urlRouterProvider) {
             // This code runs after the authentication promise has been rejected.
             // Go to the log-in page
         	$rootScope.from = "secure";
-        	UserService.setMessage('Please login before accessing the application...',$state.current.name);
+        	UserService.setMessage('Please login before accessing the application...',"secure");
             $state.go('login');
           })
 

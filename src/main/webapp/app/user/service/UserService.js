@@ -57,6 +57,21 @@ forumApp.service('UserService', function($http, $q) {
 	userService.isAuthenticated = function() {
 		return userService.curUser.authenticated;
 	};
+	
+	userService.logout = function(){
+		
+		var promise = $http.post('logout').then(
+			function(success){
+				console.log('successful logout');
+				return success;
+			},function(error){
+				console.log('logout error');
+				return error;
+			}	
+		);
+		
+		return promise;
+	};
 
 	userService.authenticateUser = function(user) {
 		// console.log('auth');

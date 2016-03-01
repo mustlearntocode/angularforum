@@ -30,7 +30,9 @@ forumApp.controller('LoginCtrl', function(UserService, $state, $rootScope){
 					});
 				},function(error){
 					console.log(error);
-					UserService.setMessage("Invalid credentials.", "login");
+					UserService.setMessage(error.data.message, "login");
+					UserService.setMessage(null,"registration");
+					UserService.setMessage(null,"secure");
 				}
 		);
 		
