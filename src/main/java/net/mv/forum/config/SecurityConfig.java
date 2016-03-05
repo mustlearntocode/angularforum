@@ -14,6 +14,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import net.mv.forum.filter.CsrfHeaderFilter;
+import net.mv.forum.filter.RestAuthenticationEntryPoint;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -21,6 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -39,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.httpBasic().and().authorizeRequests().antMatchers("/index.jsp", "/app/**", "/user/register", "/", "/forum/top", "/post/top", "/user/top", "/user/activate").permitAll()
+		http.httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint).and().authorizeRequests().antMatchers("/index.jsp", "/app/**", "/user/register", "/", "/forum/top", "/post/top", "/user/top", "/user/activate").permitAll()
 				.anyRequest().authenticated().and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf()
 				.csrfTokenRepository(csrfTokenRepository()).and().logout().logoutSuccessUrl("/index.jsp").invalidateHttpSession(true).deleteCookies("JSESSIONID","XSRF-TOKEN");
 
