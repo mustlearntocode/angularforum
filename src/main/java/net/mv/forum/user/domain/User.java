@@ -13,23 +13,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import net.mv.forum.roles.domain.Role;
 import net.mv.forum.user.dto.UserDto;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames="username",name="username_key"), @UniqueConstraint(columnNames="email",name="email_key")})
 public class User {
 
 	@Id
 	@Column(name = "u_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
-	@Column(name="username",unique=true)
+	@Column(name="username")
 	private String username;
 	private String password;
 	private Boolean enabled;
-	@Column(name="email",unique=true)
+	@Column(name="email")
 	private String email;
 
 	@ManyToMany(cascade=CascadeType.PERSIST)
