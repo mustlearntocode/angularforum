@@ -22,6 +22,12 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         // WWW-Authenticate header should be set as FormBased , else browser will show login dialog with realm
         response.setHeader("WWW-Authenticate", "FormBased");
         response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
+        
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+        
+        System.err.println(authException);
+        
+        
     }
 
 
