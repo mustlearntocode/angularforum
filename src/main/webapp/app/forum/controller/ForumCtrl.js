@@ -1,8 +1,8 @@
 forumApp.controller('ForumCtrl',
-		function(UserService, ForumService, $state, $stateParams, $timeout) {
+		function(UserService, ForumService, $state, $stateParams, $timeout, $scope) {
 
 			var forumCtrl = this;
-
+			
 			forumCtrl.forums = ForumService.getForums();
 
 			forumCtrl.forum = ForumService.getForum();
@@ -87,6 +87,10 @@ forumApp.controller('ForumCtrl',
 				});
 			};
 
+			/*
+			 * Add a new forum to the database. After getting the forum,
+			 * pass it to the ForumService for submission.
+			 */
 			forumCtrl.doAdd = function() {
 
 				forumCtrl.forum.author = forumCtrl.curUser.username;
@@ -119,12 +123,24 @@ forumApp.controller('ForumCtrl',
 			};
 
 			console.log("ForumCtrl init");
+			
+			/*
+			 * Fixed duplicate poller based on multiple controllers being created.
+			 */
+			$scope.$on("$destroy", function() {
+				console.log("Destroyering.....")
+				
+		        if (timer) {
+		        	console.log("cancelling");
+		            $timeout.cancel(timer);
+		        }
+		    });
 
 			/*
 			 * Commented out poller until refreshing model issue is fixed.
 			 */
 			var poll = function() {
-				$timeout(function() {
+//				$timeout(function() {
 					// service call to update forums
 					var promise = ForumService.retrievePaginatedForums(
 							forumCtrl.currentPage, forumCtrl.pageSize);
@@ -145,9 +161,8 @@ forumApp.controller('ForumCtrl',
 					}, function(error) {
 						console.log('Forum retrieval error in poller');
 					})
-
-					poll();
-				}, 1000);
+					timer = $timeout(poll, 1000)
+//				}, 1000);
 			};
-			poll();
+			var timer = $timeout(poll, 1000);
 		});
